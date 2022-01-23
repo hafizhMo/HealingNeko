@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         loadFact()
     }
 
@@ -26,7 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         call.enqueue(object : Callback<Fact> {
             override fun onResponse(call: Call<Fact>, response: Response<Fact>) {
-                binding.factText.text = response.body()!!.fact
+                val result = response.body()!!
+                binding.factText.text = result.fact
             }
 
             override fun onFailure(call: Call<Fact>, t: Throwable) {
