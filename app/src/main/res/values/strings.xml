@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HealingNeko</string>
+    <string name="refresh_label">refresh</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.hafizhmo.healingneko
 
 import android.os.Bundle
+import android.view.animation.RotateAnimation
 import androidx.appcompat.app.AppCompatActivity
 import com.hafizhmo.healingneko.data.Fact
 import com.hafizhmo.healingneko.databinding.ActivityMainBinding
@@ -12,6 +13,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var anim: RotateAnimation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,9 +23,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         loadFact()
+
+        binding.refreshImage.setOnClickListener {
+            loadFact()
+        }
     }
 
-    private fun loadFact(){
+    private fun loadFact() {
         val call = ApiClient.retrofitFactService.getFact()
 
         call.enqueue(object : Callback<Fact> {
