@@ -1,6 +1,6 @@
 package com.hafizhmo.healingneko.utils
 
-import com.hafizhmo.healingneko.data.Fact
+import com.hafizhmo.healingneko.data.remote.FactResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
@@ -21,7 +21,7 @@ private val retrofit = Retrofit.Builder()
 
 interface ApiService {
     @GET("fact")
-    fun getFact(): Call<Fact>
+    fun getFact(): Call<FactResponse>
 }
 
 object ApiClient{
