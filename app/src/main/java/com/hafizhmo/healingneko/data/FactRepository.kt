@@ -1,12 +1,15 @@
 package com.hafizhmo.healingneko.data
 
+import com.hafizhmo.healingneko.data.remote.network.ApiClient
 import com.hafizhmo.healingneko.data.remote.response.FactResponse
-import com.hafizhmo.healingneko.di.NetworkModule
+import javax.inject.Inject
 
-class FactRepository {
+class FactRepository @Inject constructor(
+    private val apiClient: ApiClient
+){
 
     suspend fun getFact(): FactResponse? {
-        val request = NetworkModule.apiClient.getFact()
+        val request = apiClient.getFact()
 
         if(!request.isSuccessful)
             return null

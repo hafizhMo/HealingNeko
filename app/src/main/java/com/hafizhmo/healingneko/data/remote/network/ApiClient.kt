@@ -4,8 +4,9 @@ import com.hafizhmo.healingneko.data.remote.response.FactResponse
 import com.hafizhmo.healingneko.data.remote.response.SimpleResponse
 import retrofit2.Response
 import java.lang.Exception
+import javax.inject.Inject
 
-class ApiClient(
+class ApiClient @Inject constructor(
     private val apiService: ApiService
 ) {
 
