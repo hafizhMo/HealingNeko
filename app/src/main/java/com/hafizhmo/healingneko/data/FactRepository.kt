@@ -1,31 +1,38 @@
 package com.hafizhmo.healingneko.data
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.hafizhmo.healingneko.data.remote.FactResponse
-import com.hafizhmo.healingneko.utils.ApiClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.hafizhmo.healingneko.data.local.dao.FactDao
+import com.hafizhmo.healingneko.data.local.entity.FactEntity
+import com.hafizhmo.healingneko.data.remote.network.ApiClient
+import com.hafizhmo.healingneko.data.remote.response.FactResponse
+import javax.inject.Inject
 
-class FactRepository {
+class FactRepository @Inject constructor(
+    private val apiClient: ApiClient,
+    private val factDao: FactDao
+) {
 
-    private val factResponse = MutableLiveData<FactResponse>()
+    suspend fun getFact(): FactResponse? {
+        val request = apiClient.getFact()
 
-    fun getFactResponse(): MutableLiveData<FactResponse>{
+        if (!request.isSuccessful)
+            return null
 
-        val call = ApiClient.retrofitFactService.getFact()
+        if (request.failed)
+            return null
 
-        call.enqueue(object : Callback<FactResponse>{
-            override fun onResponse(call: Call<FactResponse>, response: Response<FactResponse>) {
-                factResponse.value = response.body()!!
-            }
-
-            override fun onFailure(call: Call<FactResponse>, t: Throwable) {
-                Log.d("FactRepository", "Error: $t")
-            }
-        })
-
-        return factResponse
+        return request.body
     }
+
+    suspend fun saveFact(factEntity: FactEntity) {
+        factDao.insertFact(factEntity)
+    }
+
+    suspend fun removeFact(fact: FactEntity) {
+        factDao.deleteFact(fact)
+    }
+
+    suspend fun getFactsFromDatabase(): List<FactEntity> {
+        return factDao.getAllFact()
+    }
+
 }

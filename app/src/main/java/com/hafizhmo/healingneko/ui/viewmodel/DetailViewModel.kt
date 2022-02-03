@@ -5,38 +5,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hafizhmo.healingneko.data.FactRepository
 import com.hafizhmo.healingneko.data.local.entity.FactEntity
-import com.hafizhmo.healingneko.data.remote.response.FactResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class DetailViewModel @Inject constructor(
     private val repository: FactRepository
 ) : ViewModel() {
 
-    private val _factLiveData = MutableLiveData<FactResponse?>()
-    val factLiveData: MutableLiveData<FactResponse?> = _factLiveData
-    val factIsSaved = MutableLiveData<Boolean>()
+    private val _factLiveData = MutableLiveData<List<FactEntity>?>()
+    val factLiveData: MutableLiveData<List<FactEntity>?> = _factLiveData
+    private val factIsSaved = MutableLiveData<Boolean>()
 
-    fun refreshFact() {
+    fun loadFactFromDatabase() {
         viewModelScope.launch {
-            val response = repository.getFact()
+            val response = repository.getFactsFromDatabase()
             _factLiveData.postValue(response)
-            factIsSaved.postValue(false)
-        }
-    }
-
-    fun saveFact(fact: String){
-        viewModelScope.launch {
-            repository.saveFact(FactEntity(fact))
             factIsSaved.postValue(true)
         }
     }
 
-    fun removeFact(fact: String){
+    fun removeFact(fact: FactEntity){
         viewModelScope.launch {
-            repository.removeFact(FactEntity(fact))
+            repository.removeFact(fact)
             factIsSaved.postValue(false)
         }
     }
