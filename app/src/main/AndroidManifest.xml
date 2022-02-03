@@ -3,15 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hafizhmo.healingneko">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:allowBackup="false"
         android:name=".HealingNekoApp"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HealingNeko">
+        <activity
+            android:name=".ui.view.DetailActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.view.MainActivity"
             android:exported="true">
