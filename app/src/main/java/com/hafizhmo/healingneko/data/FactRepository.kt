@@ -1,31 +1,20 @@
 package com.hafizhmo.healingneko.data
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.hafizhmo.healingneko.data.remote.FactResponse
-import com.hafizhmo.healingneko.utils.ApiClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.hafizhmo.healingneko.data.remote.response.FactResponse
+import com.hafizhmo.healingneko.di.NetworkModule
 
 class FactRepository {
 
-    private val factResponse = MutableLiveData<FactResponse>()
+    suspend fun getFact(): FactResponse? {
+        val request = NetworkModule.apiClient.getFact()
 
-    fun getFactResponse(): MutableLiveData<FactResponse>{
+        if(!request.isSuccessful)
+            return null
 
-        val call = ApiClient.retrofitFactService.getFact()
+        if (request.failed)
+            return null
 
-        call.enqueue(object : Callback<FactResponse>{
-            override fun onResponse(call: Call<FactResponse>, response: Response<FactResponse>) {
-                factResponse.value = response.body()!!
-            }
-
-            override fun onFailure(call: Call<FactResponse>, t: Throwable) {
-                Log.d("FactRepository", "Error: $t")
-            }
-        })
-
-        return factResponse
+        return request.body
     }
+
 }
