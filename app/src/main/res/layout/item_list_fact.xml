@@ -9,9 +9,11 @@
         android:id="@+id/text_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/robotomono_semibold"
         android:padding="16dp"
-        android:textStyle="bold"
+        android:textColor="@color/blue_200"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,8 +21,10 @@
         android:id="@+id/text_detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:fontFamily="@font/robotomono_semibold"
         android:lineHeight="24dp"
+        android:padding="16dp"
+        android:textColor="@color/blue_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/text_index"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +32,14 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#33000000"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="0.5dp"
+        android:background="@color/blue_200"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/blue_200"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
