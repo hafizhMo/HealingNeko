@@ -30,5 +30,9 @@ class DetailActivity : AppCompatActivity() {
                 detailViewModel.removeFact(fact)
             }
         }
+
+        binding.imageClose.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
