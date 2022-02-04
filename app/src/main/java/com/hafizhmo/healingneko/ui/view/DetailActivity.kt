@@ -20,6 +20,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         binding.recyclerFact.layoutManager = LinearLayoutManager(this)
 
@@ -28,6 +29,10 @@ class DetailActivity : AppCompatActivity() {
             binding.recyclerFact.adapter = FactAdapter(it!!){ fact ->
                 detailViewModel.removeFact(fact)
             }
+        }
+
+        binding.imageClose.setOnClickListener {
+            onBackPressed()
         }
     }
 }
