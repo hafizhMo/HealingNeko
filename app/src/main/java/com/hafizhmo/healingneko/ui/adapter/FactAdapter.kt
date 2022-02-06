@@ -7,10 +7,12 @@ import com.hafizhmo.healingneko.data.local.entity.FactEntity
 import com.hafizhmo.healingneko.databinding.ItemListFactBinding
 
 class FactAdapter(
-    private val facts: List<FactEntity>,
     private val listener: (FactEntity) -> Unit
 ) : RecyclerView.Adapter<FactAdapter.ViewHolder>() {
-    inner class ViewHolder(val binding: ItemListFactBinding) :
+
+    private var facts: List<FactEntity> = ArrayList()
+
+    inner class ViewHolder(private val binding: ItemListFactBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(fact: FactEntity, i: Int, listener: (FactEntity) -> Unit) {
             with(binding) {
@@ -40,4 +42,13 @@ class FactAdapter(
     }
 
     override fun getItemCount(): Int = facts.size
+
+    fun clearFacts() {
+        this.facts = emptyList()
+    }
+
+    fun fillFacts(facts: List<FactEntity>){
+        this.facts = facts
+        notifyDataSetChanged()
+    }
 }
