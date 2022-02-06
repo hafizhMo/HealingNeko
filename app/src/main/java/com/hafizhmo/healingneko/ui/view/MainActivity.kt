@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.hafizhmo.healingneko.R
 import com.hafizhmo.healingneko.databinding.ActivityMainBinding
 import com.hafizhmo.healingneko.ui.viewmodel.MainViewModel
@@ -34,27 +35,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.saveImage.setOnClickListener {
-            if (!isSaved){
+            if (!isSaved) {
                 mainViewModel.saveFact(binding.factText.text.toString())
-            }else{
+            } else {
                 mainViewModel.removeFact(binding.factText.toString())
             }
         }
 
-        mainViewModel.factLiveData.observe(this){
-            if(it == null){
+        mainViewModel.factLiveData.observe(this) {
+            if (it == null) {
                 Toast.makeText(this, "Network call failed!", Toast.LENGTH_SHORT).show()
                 return@observe
             }
             binding.factText.text = it.fact
         }
 
-        mainViewModel.factIsSaved.observe(this){
+        mainViewModel.factIsSaved.observe(this) {
             isSaved = it
             if (it)
                 binding.saveImage.setImageResource(R.drawable.ic_star_filled)
             else
                 binding.saveImage.setImageResource(R.drawable.ic_star_outline)
+        }
+
+        mainViewModel.loading.observe(this) { loading ->
+            binding.loading.isVisible = loading
         }
     }
 }

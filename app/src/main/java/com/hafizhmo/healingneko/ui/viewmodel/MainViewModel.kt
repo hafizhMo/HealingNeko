@@ -18,12 +18,18 @@ class MainViewModel @Inject constructor(
     private val _factLiveData = MutableLiveData<FactResponse?>()
     val factLiveData: MutableLiveData<FactResponse?> = _factLiveData
     val factIsSaved = MutableLiveData<Boolean>()
+    val loading = MutableLiveData<Boolean>()
 
     fun refreshFact() {
         viewModelScope.launch {
+            loading.postValue(true)
             val response = repository.getFact()
-            _factLiveData.postValue(response)
-            factIsSaved.postValue(false)
+
+            if (!response?.fact.isNullOrEmpty()){
+                _factLiveData.postValue(response)
+                factIsSaved.postValue(false)
+                loading.postValue(false)
+            }
         }
     }
 
